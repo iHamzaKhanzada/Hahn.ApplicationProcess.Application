@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hahn.ApplicationProcess.Feb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hahn.ApplicationProcess.February2021.Data", "Hahn.ApplicationProcess.February2021.Data\Hahn.ApplicationProcess.February2021.Data.csproj", "{1E3F9B74-B818-4317-9445-1BC9ACF4A2CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hahn.ApplicationProcess.February2021.Domain", "Hahn.ApplicationProcess.February2021.Domain\Hahn.ApplicationProcess.February2021.Domain.csproj", "{C9498025-1B7C-4E1F-8B9F-37724C82FCEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1E3F9B74-B818-4317-9445-1BC9ACF4A2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E3F9B74-B818-4317-9445-1BC9ACF4A2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E3F9B74-B818-4317-9445-1BC9ACF4A2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9498025-1B7C-4E1F-8B9F-37724C82FCEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9498025-1B7C-4E1F-8B9F-37724C82FCEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9498025-1B7C-4E1F-8B9F-37724C82FCEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9498025-1B7C-4E1F-8B9F-37724C82FCEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
