@@ -2,6 +2,7 @@ using FluentValidation.AspNetCore;
 using Hahn.ApplicationProcess.February2021.Data;
 using Hahn.ApplicationProcess.February2021.Domain;
 using Hahn.ApplicationProcess.February2021.Domain.Interfaces;
+using Hahn.ApplicationProcess.February2021.Web.Common;
 using Hahn.ApplicationProcess.February2021.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -69,6 +70,7 @@ namespace Hahn.ApplicationProcess.February2021.Web
                 app.UseHsts();
             }
 
+            app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
