@@ -1,6 +1,7 @@
 ﻿using Hahn.ApplicationProcess.February2021.Domain;
 using Hahn.ApplicationProcess.February2021.Domain.Commands.Assets.CreateAsset;
 using Hahn.ApplicationProcess.February2021.Domain.Commands.Assets.DeleteAsset;
+using Hahn.ApplicationProcess.February2021.Domain.Commands.Assets.UpdateAsset;
 using Hahn.ApplicationProcess.February2021.Domain.Queries.Assets.GetAssetDetail;
 using Hahn.ApplicationProcess.February2021.Domain.Queries.Assets.GetAssetList;
 using MediatR;
@@ -48,8 +49,13 @@ namespace Hahn.ApplicationProcess.February2021.Web.Controllers.api
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateAssetCommand command)
         {
+            if (id != command.Id)
+                return BadRequest();
+
+            await _mediator.Send(command);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
