@@ -1,8 +1,10 @@
 ﻿using Hahn.ApplicationProcess.February2021.Domain;
 using Hahn.ApplicationProcess.February2021.Domain.Commands.Assets.CreateAsset;
+using Hahn.ApplicationProcess.February2021.Domain.Commands.Assets.DeleteAsset;
 using Hahn.ApplicationProcess.February2021.Domain.Queries.Assets.GetAssetDetail;
 using Hahn.ApplicationProcess.February2021.Domain.Queries.Assets.GetAssetList;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -45,18 +47,16 @@ namespace Hahn.ApplicationProcess.February2021.Web.Controllers.api
             return CreatedAtAction(nameof(Get), new { id = assetId }, assetId);
         }
 
-
-
-        // PUT api/<AssetController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<AssetController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            await _mediator.Send(new DeleteAssetCommand { Id = id });
+            return NoContent();
         }
     }
 }
