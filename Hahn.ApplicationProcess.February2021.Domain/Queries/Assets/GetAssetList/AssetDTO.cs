@@ -13,9 +13,7 @@ namespace Hahn.ApplicationProcess.February2021.Domain.Queries.Assets.GetAssetLis
     {
         public int Id { get; set; }
         public string AssetName { get; set; }
-
-        //public Department Department { get; set; }
-
+        public string Department { get; set; }
         public string CountryOfDepartment { get; set; }
         public string EMailAdressOfDepartment { get; set; }
         public DateTime PurchaseDate { get; set; }
