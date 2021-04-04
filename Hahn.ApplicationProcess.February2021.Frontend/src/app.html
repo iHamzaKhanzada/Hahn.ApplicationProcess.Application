@@ -28,18 +28,15 @@
 
       <div class="col-md-8 order-md-1">
         <h4 class="mb-3">Create Asset</h4>
-        <form class="needs-validation" novalidate>
+        <form class="needs-validation" novalidate submit.delegate="postdata()">
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName">Asset name</label>
-              <input type="text" class="form-control" id="txtAssetName" placeholder="" value="" required>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
+              <input type="text" class="form-control" id="txtAssetName" placeholder="" value.bind="assetName">
             </div>
             <div class="col-md-6 mb-3">
               <label for="ddlDepartment">Department</label>
-              <select class="custom-select d-block w-100" id="ddlDepartment" required>
+              <select class="custom-select d-block w-100" id="ddlDepartment" value.bind="department">
                 <option value="">Choose...</option>
                 <option value="HQ">HQ</option>
                 <option value="Store1">Store1</option>
@@ -47,40 +44,30 @@
                 <option value="Store3">Store3</option>
                 <option value="MaintenanceStation">MaintenanceStation</option>
               </select>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
             </div>
           </div>
 
           <div class="mb-3">
             <label for="txtDepartmentEmail">Department Email</label>
-            <input type="text" class="form-control" id="txtDepartmentEmail" placeholder="you@example.com">
-            <div class="invalid-feedback">
-              Please enter a valid email address for shipping updates.
-            </div>
+            <input type="text" class="form-control" id="txtDepartmentEmail" placeholder="you@example.com" value.bind="eMailAdressOfDepartment">
           </div>
 
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="txtDepartmentCountry">Department Country</label>
-              <input type="text" class="form-control" id="txtDepartmentCountry" placeholder="Pakistan" required>
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="txtPurchaseDate">PurchaseDate</label>
-              <input type="date" class="form-control" id="txtPurchaseDate" placeholder="Purchase Date" required>
-              <div class="invalid-feedback">
-                Please provide a valid state.
-              </div>
+              <input type="text" class="form-control" id="txtDepartmentCountry" placeholder="Pakistan" value.bind="countryOfDepartment">
             </div>
 
+            <div class="col-md-6 mb-3">
+              <label for="txtPurchaseDate">PurchaseDate</label>
+              <input type="date" class="form-control" id="txtPurchaseDate" placeholder="Purchase Date" value.bind="purchaseDate">
+            </div>
           </div>
+
           <hr class="mb-4">
+          
           <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="same-address">
+            <input type="checkbox" class="custom-control-input" id="same-address" checked.bind="broken">
             <label class="custom-control-label" for="same-address">Broken</label>
           </div>
 
