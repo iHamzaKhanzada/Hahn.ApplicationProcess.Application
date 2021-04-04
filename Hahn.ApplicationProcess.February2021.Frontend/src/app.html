@@ -32,7 +32,7 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName">Asset name</label>
-              <input type="text" class="form-control" id="txtAssetName" placeholder="" value.bind="assetName">
+              <input type="text" class="form-control" id="txtAssetName" placeholder="Name of Asset" value.bind="assetName">
             </div>
             <div class="col-md-6 mb-3">
               <label for="ddlDepartment">Department</label>
@@ -75,7 +75,7 @@
 
           <div class="row">
             <div class="col-md-6">
-              <button class="btn btn-outline-secondary btn-lg btn-block" type="submit">Reset</button>
+              <button class="btn btn-outline-secondary btn-lg btn-block" type="button" click.trigger="resetInput()">Reset</button>
             </div>
             <div class="col-md-6">
               <button class="btn btn-primary btn-lg btn-block" type="submit">Send</button>

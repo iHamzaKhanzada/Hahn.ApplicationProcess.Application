@@ -1,9 +1,12 @@
-import { AssetVM, AssetDTO } from './Models/AssetVM';
+import { DialogService } from 'aurelia-dialog';
+import { Prompt } from './components/mymodal';
+import { AssetVM } from './models/AssetVM';
+import { inject } from 'aurelia-framework';
 require('bootstrap/dist/css/bootstrap.min.css');
 require('bootstrap');
 
+@inject(DialogService)
 export class App {
-
 
   assetName = "Air Conditioner";
   department = "HQ";
@@ -14,12 +17,14 @@ export class App {
 
   assetVM: AssetVM;
 
-  constructor() {
+  baseAPIURL = "https://localhost:44386";
+
+  constructor(private dialogService: DialogService) {
     this.loadAssets();
   }
 
   private loadAssets() {
-    fetch('https://localhost:5001/api/Asset')
+    fetch(`${this.baseAPIURL}/api/Asset`)
       .then(x => x.json())
       .then(x => {
         this.assetVM = x;
@@ -31,7 +36,13 @@ export class App {
       });
   }
 
-  public async postdata(): Promise<boolean> {
+  showDialogue(title, description) {
+    this.dialogService.open({ viewModel: Prompt, model: { message: title, description: description }, lock: false }).whenClosed(response => {
+      console.log(response);
+    });
+  }
+
+  async postdata() {
 
     const payload = {
       assetName: this.assetName,
@@ -44,23 +55,48 @@ export class App {
 
     console.log(payload);
 
-    try {
-      await fetch("https://localhost:5001/api/Asset", {
+    await fetch(`${this.baseAPIURL}/api/Asset`,
+      {
         method: "post",
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload),
-      }).then(response => response.json()).then(x => this.loadAssets());
+      })
+      .then(response => {
 
-      return true;
+        if (!response.ok) {
+          this.showDialogue("Error", response);
+        }
+        else {
+          return response.json();
+        }
 
-    } catch (e) {
-      console.log("Error: ", e.Message); // handle the error logging however you need.
-      return false;
-    }
+      })
+      .then(x => this.loadAssets())
+      .catch(error => this.showDialogue("Error", error));
 
   }
 
+  resetInput() {
+    this.dialogService.open({ viewModel: Prompt, model: { message: 'Confirm Reset', description: 'Are you sure you want to reset all data?' }, lock: false }).whenClosed(response => {
+      if(!response.wasCancelled)
+      {
+        this.assetName = "";
+        this.department = "";
+        this.countryOfDepartment = "";
+        this.eMailAdressOfDepartment = "";
+        this.purchaseDate = "";
+        this.broken = false;
+
+      }
+      else {
+        console.log("User pressed CANCEL")
+
+      }
+
+    });
+  }
 
 }
+
