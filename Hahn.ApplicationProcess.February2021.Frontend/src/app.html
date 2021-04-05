@@ -28,11 +28,12 @@
 
       <div class="col-md-8 order-md-1">
         <h4 class="mb-3">Create Asset</h4>
-        <form class="needs-validation" novalidate submit.delegate="postdata()">
+        <form class="needs-validation" novalidate submit.delegate="postdata()" autocomplete="off">
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName">Asset name</label>
-              <input type="text" class="form-control" id="txtAssetName" placeholder="Name of Asset" value.bind="assetName">
+              <input type="text" class="form-control" id="txtAssetName" placeholder="Name of Asset"
+                value.bind="assetName" autocomplete="off">
             </div>
             <div class="col-md-6 mb-3">
               <label for="ddlDepartment">Department</label>
@@ -49,23 +50,26 @@
 
           <div class="mb-3">
             <label for="txtDepartmentEmail">Department Email</label>
-            <input type="text" class="form-control" id="txtDepartmentEmail" placeholder="you@example.com" value.bind="eMailAdressOfDepartment">
+            <input type="text" class="form-control" id="txtDepartmentEmail" placeholder="you@example.com"
+              value.bind="eMailAdressOfDepartment" autocomplete="off">
           </div>
 
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="txtDepartmentCountry">Department Country</label>
-              <input type="text" class="form-control" id="txtDepartmentCountry" placeholder="Pakistan" value.bind="countryOfDepartment">
+              <input type="text" class="form-control" id="txtDepartmentCountry" placeholder="Pakistan"
+                value.bind="countryOfDepartment" autocomplete="off">
             </div>
 
             <div class="col-md-6 mb-3">
               <label for="txtPurchaseDate">PurchaseDate</label>
-              <input type="date" class="form-control" id="txtPurchaseDate" placeholder="Purchase Date" value.bind="purchaseDate">
+              <input type="date" class="form-control" id="txtPurchaseDate" placeholder="Purchase Date"
+                value.bind="purchaseDate" autocomplete="off">
             </div>
           </div>
 
           <hr class="mb-4">
-          
+
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="same-address" checked.bind="broken">
             <label class="custom-control-label" for="same-address">Broken</label>
@@ -75,10 +79,11 @@
 
           <div class="row">
             <div class="col-md-6">
-              <button class="btn btn-outline-secondary btn-lg btn-block" type="button" click.trigger="resetInput()">Reset</button>
+              <button class="btn btn-outline-secondary btn-lg btn-block" type="button" click.trigger="resetInput()"
+                disabled.bind="disableResetButton">Reset</button>
             </div>
             <div class="col-md-6">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Send</button>
+              <button class="btn btn-primary btn-lg btn-block" type="submit" disabled.bind="disableSendButton">Send</button>
             </div>
           </div>
 

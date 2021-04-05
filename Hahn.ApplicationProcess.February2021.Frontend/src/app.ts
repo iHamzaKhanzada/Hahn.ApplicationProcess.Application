@@ -8,16 +8,19 @@ require('bootstrap');
 @inject(DialogService)
 export class App {
 
-  assetName = "Air Conditioner";
-  department = "HQ";
-  countryOfDepartment = "Bangladesh";
-  eMailAdressOfDepartment = "noreply@HQ.com";
-  purchaseDate = "2021-01-01";
-  broken = true;
+  assetName;
+  department;
+  countryOfDepartment;
+  eMailAdressOfDepartment;
+  purchaseDate;
+  broken;
 
   assetVM: AssetVM;
 
   baseAPIURL = "https://localhost:44386";
+  disableResetButton = false;
+  disableSendButton = false;
+
 
   constructor(private dialogService: DialogService) {
     this.loadAssets();
@@ -38,7 +41,7 @@ export class App {
 
   showDialogue(title, description) {
     this.dialogService.open({ viewModel: Prompt, model: { message: title, description: description }, lock: false }).whenClosed(response => {
-      console.log(response);
+      console.log(description);
     });
   }
 
@@ -66,7 +69,9 @@ export class App {
       .then(response => {
 
         if (!response.ok) {
-          this.showDialogue("Error", response);
+
+          response.text().then( text => this.showDialogue("Error", `Request rejected with status ${response.status} and message ${text}`))
+
         }
         else {
           return response.json();
@@ -74,7 +79,13 @@ export class App {
 
       })
       .then(x => this.loadAssets())
-      .catch(error => this.showDialogue("Error", error));
+      .catch(error => {
+
+        console.log(error);
+        this.showDialogue("Error", error);
+
+
+      });
 
   }
 
