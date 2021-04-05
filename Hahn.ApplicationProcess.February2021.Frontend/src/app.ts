@@ -2,10 +2,16 @@ import { DialogService } from 'aurelia-dialog';
 import { Prompt } from './components/mymodal';
 import { AssetVM } from './models/AssetVM';
 import { inject } from 'aurelia-framework';
+import {
+  ValidationControllerFactory,
+  ValidationController,
+  ValidationRules
+} from 'aurelia-validation';
+import { BootstrapFormRenderer } from './bootstrap-form-renderer';
 require('bootstrap/dist/css/bootstrap.min.css');
 require('bootstrap');
 
-@inject(DialogService)
+@inject(DialogService, ValidationControllerFactory)
 export class App {
 
   assetName;
@@ -20,10 +26,26 @@ export class App {
   baseAPIURL = "https://localhost:44386";
   disableResetButton = false;
   disableSendButton = false;
+  controller = null;
 
 
-  constructor(private dialogService: DialogService) {
+
+  rules = ValidationRules
+    .ensure('assetName').required().minLength(5)
+    .ensure('department').required()
+    .ensure('countryOfDepartment').required()
+    .ensure('purchaseDate').required().satisfies((value: any, object?: any) => new Date(value) > new Date(new Date().setFullYear(new Date().getFullYear() - 1)))
+    .ensure('eMailAdressOfDepartment').required().email()
+    .rules;
+
+
+
+  constructor(private dialogService: DialogService, controllerFactory: ValidationControllerFactory) {
     this.loadAssets();
+    this.controller = controllerFactory.createForCurrentScope();
+    this.controller.addRenderer(new BootstrapFormRenderer());
+
+
   }
 
   private loadAssets() {
@@ -45,7 +67,16 @@ export class App {
     });
   }
 
-  async postdata() {
+  async submit() {
+    this.controller.validate().then(x => this.postdata(x));
+  }
+
+
+  async postdata(result) {
+
+    if (!result.valid) {
+      return;
+    }
 
     const payload = {
       assetName: this.assetName,
@@ -70,7 +101,7 @@ export class App {
 
         if (!response.ok) {
 
-          response.text().then( text => this.showDialogue("Error", `Request rejected with status ${response.status} and message ${text}`))
+          response.text().then(text => this.showDialogue("Error", `Request rejected with status ${response.status} and message ${text}`))
 
         }
         else {
@@ -89,10 +120,10 @@ export class App {
 
   }
 
+
   resetInput() {
     this.dialogService.open({ viewModel: Prompt, model: { message: 'Confirm Reset', description: 'Are you sure you want to reset all data?' }, lock: false }).whenClosed(response => {
-      if(!response.wasCancelled)
-      {
+      if (!response.wasCancelled) {
         this.assetName = "";
         this.department = "";
         this.countryOfDepartment = "";
