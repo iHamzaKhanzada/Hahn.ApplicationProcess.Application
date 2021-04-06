@@ -1,143 +1,16 @@
-import { DialogService } from 'aurelia-dialog';
-import { Prompt } from './components/mymodal';
-import { AssetVM } from './models/AssetVM';
-import { inject } from 'aurelia-framework';
-import {
-  ValidationControllerFactory,
-  ValidationController,
-  ValidationRules
-} from 'aurelia-validation';
-import { BootstrapFormRenderer } from './bootstrap-form-renderer';
+import { PLATFORM } from 'aurelia-pal';
 require('bootstrap/dist/css/bootstrap.min.css');
 require('bootstrap');
 
-@inject(DialogService, ValidationControllerFactory)
 export class App {
 
-  assetName;
-  department;
-  countryOfDepartment;
-  eMailAdressOfDepartment;
-  purchaseDate;
-  broken;
+  configureRouter(config, router) {
+    config.title = "Aurelia App";
+    config.map([
+      { route: '', name: 'Home', moduleId: PLATFORM.moduleName("components/asset/asset"), title: 'Home' },
+      { route: 'assetresult', name: 'AssetResult', moduleId: PLATFORM.moduleName("components/assetresult/assetresult"), title: 'Asset Result' }
 
-  assetVM: AssetVM;
-
-  baseAPIURL = "https://localhost:44386";
-  disableResetButton = false;
-  disableSendButton = false;
-  controller = null;
-
-
-
-  rules = ValidationRules
-    .ensure('assetName').required().minLength(5)
-    .ensure('department').required()
-    .ensure('countryOfDepartment').required()
-    .ensure('purchaseDate').required().satisfies((value: any, object?: any) => new Date(value) > new Date(new Date().setFullYear(new Date().getFullYear() - 1)))
-    .ensure('eMailAdressOfDepartment').required().email()
-    .rules;
-
-
-
-  constructor(private dialogService: DialogService, controllerFactory: ValidationControllerFactory) {
-    this.loadAssets();
-    this.controller = controllerFactory.createForCurrentScope();
-    this.controller.addRenderer(new BootstrapFormRenderer());
-
-
-  }
-
-  private loadAssets() {
-    fetch(`${this.baseAPIURL}/api/Asset`)
-      .then(x => x.json())
-      .then(x => {
-        this.assetVM = x;
-
-        if (this.assetVM.assets.length > 0)
-          this.assetVM.assets.forEach(y => y.purchaseDate = new Date(y.purchaseDate).toLocaleDateString());
-
-        console.log(x);
-      });
-  }
-
-  showDialogue(title, description) {
-    this.dialogService.open({ viewModel: Prompt, model: { message: title, description: description }, lock: false }).whenClosed(response => {
-      console.log(description);
-    });
-  }
-
-  async submit() {
-    this.controller.validate().then(x => this.postdata(x));
-  }
-
-
-  async postdata(result) {
-
-    if (!result.valid) {
-      return;
-    }
-
-    const payload = {
-      assetName: this.assetName,
-      department: this.department,
-      eMailAdressOfDepartment: this.eMailAdressOfDepartment,
-      countryOfDepartment: this.countryOfDepartment,
-      purchaseDate: this.purchaseDate,
-      broken: this.broken
-    };
-
-    console.log(payload);
-
-    await fetch(`${this.baseAPIURL}/api/Asset`,
-      {
-        method: "post",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload),
-      })
-      .then(response => {
-
-        if (!response.ok) {
-
-          response.text().then(text => this.showDialogue("Error", `Request rejected with status ${response.status} and message ${text}`))
-
-        }
-        else {
-          return response.json();
-        }
-
-      })
-      .then(x => this.loadAssets())
-      .catch(error => {
-
-        console.log(error);
-        this.showDialogue("Error", error);
-
-
-      });
-
-  }
-
-
-  resetInput() {
-    this.dialogService.open({ viewModel: Prompt, model: { message: 'Confirm Reset', description: 'Are you sure you want to reset all data?' }, lock: false }).whenClosed(response => {
-      if (!response.wasCancelled) {
-        this.assetName = "";
-        this.department = "";
-        this.countryOfDepartment = "";
-        this.eMailAdressOfDepartment = "";
-        this.purchaseDate = "";
-        this.broken = false;
-
-      }
-      else {
-        console.log("User pressed CANCEL")
-
-      }
-
-    });
+    ])
   }
 
 }

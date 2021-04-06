@@ -25,8 +25,6 @@ export class BootstrapFormRenderer {
       return;
     }
 
-    console.log(element);
-
     element.classList.add('form-control-error');
 
     // add the has-error class to the enclosing form-group div
