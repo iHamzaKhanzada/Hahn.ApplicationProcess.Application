@@ -32,14 +32,14 @@
             <div class="form-group">
               <label for="txtAssetName">Asset name</label>
               <input type="text" class="form-control" id="txtAssetName" placeholder="Name of Asset"
-                value.bind="assetName & validate:rules" autocomplete="off">
+                value.bind="assetName & validate:rules" autocomplete="off" change.delegate="goInputChange()">
 
             </div>
           </div>
           <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="ddlDepartment">Department</label>
-              <select class="custom-select d-block w-100" id="ddlDepartment" value.bind="department & validate:rules">
+              <select class="custom-select d-block w-100" id="ddlDepartment" value.bind="department & validate:rules" change.delegate="goInputChange()">
                 <option value="">Choose...</option>
                 <option value="HQ">HQ</option>
                 <option value="Store1">Store1</option>
@@ -55,7 +55,7 @@
           <div class="form-group">
             <label for="txtDepartmentEmail">Department Email</label>
             <input type="text" class="form-control" id="txtDepartmentEmail" placeholder="you@example.com"
-              value.bind="eMailAdressOfDepartment & validate:rules" autocomplete="off">
+              value.bind="eMailAdressOfDepartment & validate:rules" autocomplete="off" change.delegate="goInputChange()">
           </div>
         </div>
 
@@ -64,7 +64,7 @@
             <div class="form-group">
               <label for="txtDepartmentCountry">Department Country</label>
               <input type="text" class="form-control" id="txtDepartmentCountry" placeholder="Pakistan"
-                value.bind="countryOfDepartment & validate:rules" autocomplete="off">
+                value.bind="countryOfDepartment & validate:rules" autocomplete="off" change.delegate="goInputChange()">
             </div>
           </div>
 
@@ -72,7 +72,7 @@
             <div class="form-group">
               <label for="txtPurchaseDate">PurchaseDate</label>
               <input type="date" class="form-control" id="txtPurchaseDate" placeholder="Purchase Date"
-                value.bind="purchaseDate & validate:rules" autocomplete="off">
+                value.bind="purchaseDate & validate:rules" autocomplete="off" change.delegate="goInputChange()">
             </div>
           </div>
         </div>

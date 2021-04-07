@@ -24,7 +24,7 @@ export class AssetComponent {
   assetVM: AssetVM;
 
   baseAPIURL = "https://localhost:44386";
-  disableResetButton = false;
+  disableResetButton = true;
   disableSendButton = false;
   controller = null;
 
@@ -46,6 +46,16 @@ export class AssetComponent {
     this.loadAssets();
     this.controller = controllerFactory.createForCurrentScope();
     this.controller.addRenderer(new BootstrapFormRenderer());
+  }
+
+  goInputChange() {
+    debugger
+    this.disableResetButton =
+      !(this.assetName?.length > 0 ||
+        this.eMailAdressOfDepartment?.length > 0 ||
+        this.department?.length > 0 ||
+        this.purchaseDate.length > 0 ||
+        this.countryOfDepartment?.length > 0);
   }
 
   private loadAssets() {
@@ -129,6 +139,7 @@ export class AssetComponent {
     this.eMailAdressOfDepartment = "";
     this.purchaseDate = "";
     this.broken = false;
+    this.disableResetButton = true;
   }
 
 
