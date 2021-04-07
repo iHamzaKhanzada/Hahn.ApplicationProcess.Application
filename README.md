@@ -1,6 +1,16 @@
 # Hahn.ApplicationProcess.Application
-Coding skills test for a German based company
 
+## How to run application
+- In Project Hahn.ApplicationProcess.February2021.Web's `Startup.cs` file under `Configure` method, set up appropriate Origin for front end project (By default its `http://localhost:8080`
+- In Project Hahn.ApplicationProcess.February2021.Frontend's Src > Components > Asset > Asset.ts file, set up baseAPIURL property according to Hahn.ApplicationProcess.February2021.Web's port (By default its `https://localhost:44386`)
+- After configuring urls specified above, Start Hahn.ApplicationProcess.February2021.Web Project and Hahn.ApplicationProcess.February2021.Frontend Project
+
+### Docker File
+- Hahn.ApplicationProcess.February2021.Web Project contains docker file that can be used to run API Project
+
+
+### Requirements
+------------------------------------------------------------------------------------------------------------------------
 Dear applicant,
 
 Thanks for your application and your interest on being a part of our Team at Hahn-Softwareentwicklung. To get in touch and see some of your coding skills we have prepared the following task for you.

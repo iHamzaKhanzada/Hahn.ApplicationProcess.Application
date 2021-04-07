@@ -49,12 +49,11 @@ export class AssetComponent {
   }
 
   goInputChange() {
-    debugger
     this.disableResetButton =
       !(this.assetName?.length > 0 ||
         this.eMailAdressOfDepartment?.length > 0 ||
         this.department?.length > 0 ||
-        this.purchaseDate.length > 0 ||
+        this.purchaseDate?.length > 0 ||
         this.countryOfDepartment?.length > 0);
   }
 
